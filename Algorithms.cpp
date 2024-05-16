@@ -202,7 +202,7 @@ string Algorithms::shortestPath(const Graph &g, size_t start, size_t end)
 {
 
     vector<bool> visited(g.getGraph().size(), false);
-    vector<int> distance(g.getGraph().size(), -1); // TODO: change to INF
+    vector<int> distance(g.getGraph().size(), std::numeric_limits<int>::infinity()); // TODO: change to INF
     vector<int> parent(g.getGraph().size(), -1);   // This is will be the path that we will print to see the shortest path
 
     // If the graph is not weighted, use BFS to find the shortest path
@@ -211,7 +211,7 @@ string Algorithms::shortestPath(const Graph &g, size_t start, size_t end)
         // return bfs(g,start,end);
         bfs(g, start, visited, distance, parent);
 
-        if (distance[end] != -1) // TODO change to INF
+        if (distance[end] != std::numeric_limits<int>::infinity()) // TODO change to INF
         {
             string path = std::to_string(end);
             int p = parent[end];
@@ -231,6 +231,12 @@ string Algorithms::shortestPath(const Graph &g, size_t start, size_t end)
     {
         if (bellmanFord(g, start, distance, parent))
         {
+
+                if(distance[end]==std::numeric_limits<int>::infinity())
+                {
+                    return "-1";
+                }
+
             string path = std::to_string(end);
             int p = parent[end];
             while (p != -1)
